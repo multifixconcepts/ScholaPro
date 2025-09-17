@@ -4,35 +4,38 @@ services:
   app:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: docker/php/Dockerfile
     container_name: scholapro_app
     restart: unless-stopped
-    working_dir: /var/www/html
     volumes:
-      - ./:/var/www/html
+      - .:/var/www/html
     networks:
       - scholapro
+    depends_on:
+      - db
 
-  nginx:
-    image: nginx:1.19-alpine
+  webserver:
+    image: nginx:1.21-alpine
     container_name: scholapro_nginx
     restart: unless-stopped
     ports:
       - "8080:80"
     volumes:
-      - ./:/var/www/html
-      - ./docker/nginx:/etc/nginx/conf.d
+      - .:/var/www/html
+      - ./docker/nginx/conf.d:/etc/nginx/conf.d
     networks:
       - scholapro
+    depends_on:
+      - app
 
   db:
-    image: postgres:13
+    image: postgres:13-alpine
     container_name: scholapro_db
     restart: unless-stopped
     environment:
-      POSTGRES_DB: ${DB_NAME:-scholapro_db}
-      POSTGRES_USER: ${DB_USER:-scholapro_user}
-      POSTGRES_PASSWORD: ${DB_PASS:-scholapro_password}
+      POSTGRES_DB: ${DB_NAME:-scholapro}
+      POSTGRES_USER: ${DB_USER:-scholapro}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-secret}
     volumes:
       - scholapro_data:/var/lib/postgresql/data
       - ./docker/postgresql/init.sql:/docker-entrypoint-initdb.d/init.sql
