@@ -245,3 +245,16 @@ modules/Email_Parents/
 modules/Student_Billing_Premium/
 modules/Quiz/
 plugins/TinyMCE_Record_Audio_Video
+
+/vendor
+.env
+/node_modules
+.idea/
+.vscode/
+*.log
+/storage/*.key
+/storage/logs/*
+/storage/framework/sessions/*
+/storage/framework/cache/*
+.DS_Store
+Thumbs.db

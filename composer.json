@@ -1,0 +1,17 @@
+{
+    "name": "extravus/scholapro",
+    "description": "Commercial SaaS Student Information System",
+    "type": "project",
+    "license": "proprietary",
+    "require": {
+        "php": ">=7.4",
+        "ext-pgsql": "*",
+        "ext-gettext": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "ScholaPro\\": "src/"
+        }
+    },
+    "minimum-stability": "stable"
+}
