@@ -248,13 +248,14 @@ plugins/TinyMCE_Record_Audio_Video
 
 /vendor
 .env
-/node_modules
-.idea/
-.vscode/
+.env.backup
+node_modules/
+npm-debug.log
+yarn-error.log
+/.idea
+/.vscode
 *.log
-/storage/*.key
-/storage/logs/*
-/storage/framework/sessions/*
-/storage/framework/cache/*
 .DS_Store
 Thumbs.db
+*.cache
+/storage/*.key
