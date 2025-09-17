@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: scholapro_app
+    restart: unless-stopped
+    working_dir: /var/www/html
+    volumes:
+      - ./:/var/www/html
+    networks:
+      - scholapro
+
+  nginx:
+    image: nginx:1.19-alpine
+    container_name: scholapro_nginx
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    volumes:
+      - ./:/var/www/html
+      - ./docker/nginx:/etc/nginx/conf.d
+    networks:
+      - scholapro
+
+  db:
+    image: postgres:13
+    container_name: scholapro_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_NAME:-scholapro_db}
+      POSTGRES_USER: ${DB_USER:-scholapro_user}
+      POSTGRES_PASSWORD: ${DB_PASS:-scholapro_password}
+    volumes:
+      - scholapro_data:/var/lib/postgresql/data
+      - ./docker/postgresql/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432:5432"
+    networks:
+      - scholapro
+
+networks:
+  scholapro:
+    driver: bridge
+
+volumes:
+  scholapro_data:
+    driver: local

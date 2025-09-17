@@ -1,0 +1,58 @@
+/* Subscription Plans */
+.subscription-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    padding: 2rem;
+}
+
+.plan-card {
+    background: var(--ui-surface);
+    border-radius: 8px;
+    padding: 2rem;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
+}
+
+.plan-card:hover {
+    transform: translateY(-5px);
+}
+
+.plan-card.free { border-top: 4px solid var(--tier-free); }
+.plan-card.bronze { border-top: 4px solid var(--tier-bronze); }
+.plan-card.silver { border-top: 4px solid var(--tier-silver); }
+.plan-card.gold { border-top: 4px solid var(--tier-gold); }
+
+.plan-card .price {
+    font-size: 2rem;
+    font-weight: bold;
+    margin: 1rem 0;
+    color: var(--text-primary);
+}
+
+.plan-card .features {
+    list-style: none;
+    padding: 0;
+    margin: 2rem 0;
+    text-align: left;
+}
+
+.plan-card .features li {
+    padding: 0.5rem 0;
+    color: var(--text-secondary);
+}
+
+.plan-card .features li::before {
+    content: "✓";
+    color: var(--status-success);
+    margin-right: 0.5rem;
+}
+
+.current-plan {
+    background: var(--ui-surface);
+    padding: 2rem;
+    margin-bottom: 2rem;
+    border-radius: 8px;
+    border-left: 4px solid var(--brand-primary);
+}
