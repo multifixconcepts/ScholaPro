@@ -1,0 +1,8 @@
+.git
+.gitignore
+.dockerignore
+config.inc.php
+Dockerfile
+.github
+deploy
+*.md

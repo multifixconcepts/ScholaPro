@@ -1,0 +1,7 @@
+# Local/environment config (contains DB credentials) — never commit
+config.inc.php
+
+# Runtime artifacts
+*.log
+.DS_Store
+node_modules/

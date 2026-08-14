@@ -1,0 +1,26 @@
+services:
+  scholapro-staging:
+    image: ghcr.io/multifixconcepts/scholapro:latest
+    restart: unless-stopped
+    ports:
+      - "8085:80"
+    volumes:
+      - ./config.staging.php:/var/www/html/config.inc.php:ro
+      - scholapro_staging_uploads:/var/www/html/uploads
+    depends_on:
+      - scholapro-staging-db
+
+  scholapro-staging-db:
+    image: mariadb:10.11
+    restart: unless-stopped
+    environment:
+      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-scholapro_staging_root}
+      MARIADB_DATABASE: scholapro_staging
+      MARIADB_USER: scholapro
+      MARIADB_PASSWORD: ${DB_PASSWORD:-scholapro_staging_pass}
+    volumes:
+      - scholapro_staging_db:/var/lib/mysql
+
+volumes:
+  scholapro_staging_uploads:
+  scholapro_staging_db:

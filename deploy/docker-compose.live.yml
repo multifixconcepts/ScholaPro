@@ -1,0 +1,36 @@
+services:
+  school4:
+    image: ghcr.io/multifixconcepts/scholapro:latest
+    restart: unless-stopped
+    ports:
+      - "8084:80"
+    volumes:
+      - ./config.live.php:/var/www/html/config.inc.php:ro
+      - school4_uploads:/var/www/html/uploads
+    networks:
+      - npm-network
+    depends_on:
+      - db-school4
+
+  db-school4:
+    image: mariadb:10.11
+    restart: unless-stopped
+    environment:
+      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:?DB_ROOT_PASSWORD required}
+      MARIADB_DATABASE: school4_db
+      MARIADB_USER: admin
+      MARIADB_PASSWORD: ${DB_PASSWORD:?DB_PASSWORD required}
+    volumes:
+      - school4_db_data:/var/lib/mysql
+    networks:
+      - npm-network
+
+volumes:
+  school4_uploads:
+  school4_db_data:
+    external: true
+    name: school4_db_school4_data
+
+networks:
+  npm-network:
+    external: true
